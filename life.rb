@@ -23,6 +23,12 @@ OptionParser.new do |opts|
     options[:height] = height
   end
 
+  opts.on('--interval [INTERVAL]', Float, 'Refresh interval (seconds)') do |interval|
+    next unless interval
+
+    options[:interval] = interval
+  end
+
   opts.on('-h', '--help', 'Prints this help') do
     puts opts
     exit
@@ -38,7 +44,7 @@ begin
   while true
     board.tick
     view.render(board)
-    sleep 0.5
+    sleep options[:interval] || 0.5
   end
 rescue Interrupt
   puts "\n"
